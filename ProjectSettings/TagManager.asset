@@ -3,10 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
+<<<<<<< HEAD
   tags:
   - Tile
   - Enemy
   - Tower
+=======
+  tags: []
+>>>>>>> 2cbccd66e2047ba39b8c2e87421efccca1a627a4
   layers:
   - Default
   - TransparentFX

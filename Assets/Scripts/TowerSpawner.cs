@@ -5,6 +5,7 @@ using UnityEngine;
 public class TowerSpawner : MonoBehaviour
 {
     [SerializeField]
+<<<<<<< HEAD
     private TowerTemplate towerTemplete; // 티워 정보
     //[SerializeField]
    // private GameObject towerPrefab;
@@ -18,6 +19,19 @@ public class TowerSpawner : MonoBehaviour
 
     private GameObject followTowerClone = null;
     private GameObject followTowerRangeClone = null;
+=======
+    private GameObject towerPrefab;
+    [SerializeField]
+    private EnemySpawner enemySpawner;
+    [SerializeField]
+    private int towerBuildGold = 30; // 타워 건설 비용
+    [SerializeField]
+    private PlayerGold playerGold; //타워 건설 시 골드 감소
+    private bool isOnTowerButton = false; // 타워 건설 버튼을 눌렀는지 체크
+    [SerializeField]
+    private GameObject followTower; // 임시 타워 사용 완료 시 삭제를 위해 저장하는 변수
+    private GameObject followTowerClone;
+>>>>>>> 2cbccd66e2047ba39b8c2e87421efccca1a627a4
 
     public void ReadyToSpawnTower()
     {
@@ -26,15 +40,23 @@ public class TowerSpawner : MonoBehaviour
             return;
         }
 
+<<<<<<< HEAD
         if (towerTemplete.weapon[0].cost > playerGold.CurrentGold)
+=======
+        if (towerBuildGold > playerGold.CurrentGold)
+>>>>>>> 2cbccd66e2047ba39b8c2e87421efccca1a627a4
         {
             return;
         }
 
         isOnTowerButton = true;
+<<<<<<< HEAD
         followTowerClone = Instantiate(towerTemplete.followTowerPrefab);
         followTowerRangeClone = Instantiate(towerTemplete.followTowerRangePrefab);
         StartCoroutine("OnTowerCancelSystem");
+=======
+        followTowerClone = Instantiate(followTower);
+>>>>>>> 2cbccd66e2047ba39b8c2e87421efccca1a627a4
     }
 
     public void SpawnTower(Transform tileTransform)
@@ -61,6 +83,7 @@ public class TowerSpawner : MonoBehaviour
         tile.IsBuildTower = true;
         isOnTowerButton = false;
         // 타워 설치 시 돈 감소
+<<<<<<< HEAD
         playerGold.CurrentGold -= towerTemplete.weapon[0].cost;
         Vector3 position = tileTransform.position + Vector3.back;
         // 선택한 타일의 위치에 타워 건설
@@ -86,5 +109,12 @@ public class TowerSpawner : MonoBehaviour
             yield return null;
 
         }
+=======
+        playerGold.CurrentGold -= towerBuildGold;
+        // 선택한 타일의 위치에 타워 건설
+        GameObject clone = Instantiate(towerPrefab, tileTransform.position, Quaternion.identity);
+        clone.GetComponent<TowerWeapon>().SetUp(enemySpawner);
+        Destroy(followTowerClone);
+>>>>>>> 2cbccd66e2047ba39b8c2e87421efccca1a627a4
     }
 }

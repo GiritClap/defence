@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4169934812727941503}
-  - component: {fileID: 4169934812727941502}
   - component: {fileID: 4169934812727941501}
   - component: {fileID: 4169934812727941500}
   - component: {fileID: 4169934812727941491}
+  - component: {fileID: 4169934812727941502}
   - component: {fileID: 974527764478759329}
   m_Layer: 0
   m_Name: Projectile
@@ -35,20 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4169934812727941502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4169934812727941490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5da9e82b33af8b04d94b306f13481723, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!58 &4169934812727941501
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -137,6 +123,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4169934812727941502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4169934812727941490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da9e82b33af8b04d94b306f13481723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &974527764478759329
 MonoBehaviour:
   m_ObjectHideFlags: 0

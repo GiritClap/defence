@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc3cddb072e71445b375c242efe63bb, type: 3}
+  m_Name: Tower01Cannon
+  m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 7803099431767397104, guid: 124350fafe7a44d40bb5d1c174ac8a10, type: 3}
+  followTowerPrefab: {fileID: 5572026853087047338, guid: fa049c316acb7a048ad59449a24e1e7c, type: 3}
+  followTowerRangePrefab: {fileID: 6331147239204374768, guid: 749cf5bac1c04c145b5fd4774eecf24d, type: 3}
+  weapon:
+  - sprite: {fileID: 21300000, guid: b56df503a139e3146b1b17a771f974f2, type: 3}
+    damage: 1
+    rate: 0.5
+    name: Tower01_0
+    range: 2
+    cost: 30
+  - sprite: {fileID: 21300000, guid: 7da347c9c703ffd44b7e76bf53ff1c36, type: 3}
+    damage: 1.5
+    rate: 0.4
+    name: Tower01_1
+    range: 2
+    cost: 100
+  - sprite: {fileID: 21300000, guid: 5fbdaac3d59ffac49991e086f2c7d561, type: 3}
+    damage: 2
+    rate: 0.3
+    name: Tower01_2
+    range: 2
+    cost: 150

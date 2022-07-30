@@ -4,24 +4,64 @@ using UnityEngine;
 
 public class RandomShop : MonoBehaviour
 {
-    private int level;
+
     public List<RandomTower> deck = new List<RandomTower>();
     public int total = 0;
-    public List<RandomTower> result = new List<RandomTower> ();
+    private RandomTower result;
+
+    public GameObject towerPrefab;
+    public Transform parent;
+
+    private GameObject[] towerUI = new GameObject[2];
+
+
+    void Start()
+    {
+        for (int i = 0; i < deck.Count; i++)
+        {
+            total += deck[i].weight;
+        }
+        ResultSelect();
+    }
+
+    public void ReRandom()
+    {
+        total = 0;
+        result = null;  
+        for(int i = 0; i < 2; i++)
+        {
+            Destroy(towerUI[i]);
+
+        }
+        for (int i = 0; i < deck.Count; i++)
+        {
+            total += deck[i].weight;
+        }
+        ResultSelect();
+    }
 
     public void ResultSelect()
     {
-        result.Add(RandTower());
+        for (int i = 0; i < 2; i++)
+        {
+            // 가중치 랜덤을 돌리면서 결과 리스트에 넣어줍니다.
+            result = RandTower();
+            // 비어 있는 카드를 생성하고
+            towerUI[i] = Instantiate(towerPrefab, parent);
+            // 생성 된 카드에 결과 리스트의 정보를 넣어줍니다.
+            towerUI[i].GetComponent<ShopTowerInfo>().TowerUiSet(result);
+        }
+
     }
     public RandomTower RandTower()
     {
         int weight = 0;
         int selectNum = 0;
         selectNum = Mathf.RoundToInt(total * Random.Range(0.0f, 1.0f));
-        for(int i = 0; i < deck.Count; i++)
+        for (int i = 0; i < deck.Count; i++)
         {
             weight += deck[i].weight;
-            if(selectNum <= weight)
+            if (selectNum <= weight)
             {
                 RandomTower temp = new RandomTower(deck[i]);
                 return temp;
@@ -30,16 +70,6 @@ public class RandomShop : MonoBehaviour
         return null;
     }
 
-    void Start()
-    {
-        for(int i = 0; i < deck.Count; i++)
-        {
-            total += deck[i].weight;
-        }
-    }
-    // onClick으로 조절할 레벨업
-    public void LevelUp()
-    {
-        level++;
-    }
+
+
 }

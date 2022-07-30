@@ -5,7 +5,7 @@ using UnityEngine;
 public class TowerSpawner : MonoBehaviour
 {
     [SerializeField]
-    private TowerTemplate towerTemplete; // 티워 정보
+    private TowerTemplate[] towerTemplete; // 티워 정보
     //[SerializeField]
    // private GameObject towerPrefab;
     [SerializeField]
@@ -18,22 +18,23 @@ public class TowerSpawner : MonoBehaviour
 
     private GameObject followTowerClone = null;
     private GameObject followTowerRangeClone = null;
-
-    public void ReadyToSpawnTower()
+    private int towerType;
+    public void ReadyToSpawnTower(int type)
     {
+        towerType = type;
         if (isOnTowerButton == true)
         {
             return;
         }
 
-        if (towerTemplete.weapon[0].cost > playerGold.CurrentGold)
+        if (towerTemplete[towerType].weapon[0].cost > playerGold.CurrentGold)
         {
             return;
         }
 
         isOnTowerButton = true;
-        followTowerClone = Instantiate(towerTemplete.followTowerPrefab);
-        followTowerRangeClone = Instantiate(towerTemplete.followTowerRangePrefab);
+        followTowerClone = Instantiate(towerTemplete[towerType].followTowerPrefab);
+        followTowerRangeClone = Instantiate(towerTemplete[towerType].followTowerRangePrefab);
         StartCoroutine("OnTowerCancelSystem");
     }
 
@@ -61,10 +62,10 @@ public class TowerSpawner : MonoBehaviour
         tile.IsBuildTower = true;
         isOnTowerButton = false;
         // 타워 설치 시 돈 감소
-        playerGold.CurrentGold -= towerTemplete.weapon[0].cost;
+        playerGold.CurrentGold -= towerTemplete[towerType].weapon[0].cost;
         Vector3 position = tileTransform.position + Vector3.back;
         // 선택한 타일의 위치에 타워 건설
-        GameObject clone = Instantiate(towerTemplete.towerPrefab, position, Quaternion.identity);
+        GameObject clone = Instantiate(towerTemplete[towerType].towerPrefab, position, Quaternion.identity);
         clone.GetComponent<TowerWeapon>().SetUp(enemySpawner);
         Destroy(followTowerClone);
         Destroy(followTowerRangeClone);

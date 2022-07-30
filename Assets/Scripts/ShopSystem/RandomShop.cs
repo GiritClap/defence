@@ -9,8 +9,9 @@ public class RandomShop : MonoBehaviour
     public int total = 0;
     private RandomTower result;
 
-    public GameObject towerPrefab;
+    public GameObject[] towerPrefab;
     public Transform parent;
+    private RandomTower temp;
 
     private GameObject[] towerUI = new GameObject[2];
 
@@ -47,7 +48,14 @@ public class RandomShop : MonoBehaviour
             // 가중치 랜덤을 돌리면서 결과 리스트에 넣어줍니다.
             result = RandTower();
             // 비어 있는 카드를 생성하고
-            towerUI[i] = Instantiate(towerPrefab, parent);
+            if(temp.towerName.Equals("Tower01"))
+            {
+                towerUI[i] = Instantiate(towerPrefab[0], parent);
+            } else if(temp.towerName.Equals("Tower02"))
+            {
+                towerUI[i] = Instantiate(towerPrefab[1], parent);
+            }
+            
             // 생성 된 카드에 결과 리스트의 정보를 넣어줍니다.
             towerUI[i].GetComponent<ShopTowerInfo>().TowerUiSet(result);
         }
@@ -63,7 +71,7 @@ public class RandomShop : MonoBehaviour
             weight += deck[i].weight;
             if (selectNum <= weight)
             {
-                RandomTower temp = new RandomTower(deck[i]);
+                temp = new RandomTower(deck[i]);
                 return temp;
             }
         }

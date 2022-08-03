@@ -14,9 +14,10 @@ public class TowerTemplate : ScriptableObject
     public struct Weapon
     {
         public Sprite sprite; // 보여지는 이미지
+        public string name; // 이름
         public float damage; // 공격력
         public float rate; // 공격 속도
-        public string name; // 이름
+        public float slow; // 감속 퍼센트 (0.2 = 20%)
         public float range; // 공격범위
         public int cost; // 필요 비용
     }

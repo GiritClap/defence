@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponState { SearchTarget = 0, AttackToTarget }
+public enum WeaponType { Cannon = 0, Slow }
+public enum WeaponState { SearchTarget = 0, TryAttackCannon }
 public class TowerWeapon : MonoBehaviour
 {
+    [Header("Cannon")]
     [SerializeField]
     private TowerTemplate towerTemplete; // 타워 정보
     [SerializeField]
-    private GameObject projectilePrefab; // 발사체 프리펩
-    [SerializeField]
     private Transform spawnPoint; // 발사체 생성 위치
-    
-    
+    [SerializeField]
+    private WeaponType weaponType; // 무기 속성 설정
+
+    [Header("Cannon")]
+    [SerializeField]
+    private GameObject projectilePrefab; // 발사체 프리펩
+
+
     private WeaponState weaponState = WeaponState.SearchTarget; // 타워의 무기상태
     private Transform attackTarget = null; // 공격 대상
     private EnemySpawner enemySpawner; // 게임에 존재하는 적 정보 획득용
@@ -24,14 +30,22 @@ public class TowerWeapon : MonoBehaviour
     public float Rate => towerTemplete.weapon[level].rate;
     public float Level => level + 1;
     public string Name => towerTemplete.weapon[level].name;
+    public float Slow => towerTemplete.weapon[level].slow;
+
+    public WeaponType WeaponType => weaponType;
 
     
 
     public void SetUp(EnemySpawner enemySpawner)
     {
+        
         this.enemySpawner = enemySpawner;
         // 최초 상태를 WeaponState.SearchTarget으로 설정
-        ChangeState(WeaponState.SearchTarget);
+        if(weaponType == WeaponType.Cannon)
+        {
+            ChangeState(WeaponState.SearchTarget);
+        }
+       
     }
 
     public void ChangeState(WeaponState newState)
@@ -64,25 +78,11 @@ public class TowerWeapon : MonoBehaviour
     {
         while (true)
         {
-            // 제일 가까이 있는 적을 찾기 위해 최초 거리를 최대한 크게 설정
-            float closetDistSqr = Mathf.Infinity;
-
-            // EnemySpawner의 EnemyList에 있는 현재 맵에 존재하는 모든 적 검사
-            for (int i = 0; i < enemySpawner.EnemyList.Count; i++)
-            {
-                float distance = Vector3.Distance(enemySpawner.EnemyList[i].transform.position, transform.position);
-
-                //현재 검사중인 적과의 거리가 공격범위 내에 있고 현재까지 검사한 적보다 거리가 가까우면
-                if (distance <= towerTemplete.weapon[level].range && distance <= closetDistSqr)
-                {
-                    closetDistSqr = distance;
-                    attackTarget = enemySpawner.EnemyList[i].transform;
-                }
-            }
+            attackTarget = FindClosestAttackTarget();
 
             if (attackTarget != null)
             {
-                ChangeState(WeaponState.AttackToTarget);
+                ChangeState(WeaponState.TryAttackCannon);
             }
 
             yield return null;
@@ -91,31 +91,60 @@ public class TowerWeapon : MonoBehaviour
 
     }
 
-    private IEnumerator AttackToTarget()
+    private IEnumerator TryAttackCannon()
     {
         while (true)
         {
-            // 1. target이 있는지 검사(다른 발사체에 의해 제거, Goal지점까지 이동해 삭제 등등)
-            if (attackTarget == null)
+            // target을 공격하는게 가능한지 검사
+            if(IsPossivleToAttackTarget() == false)
             {
                 ChangeState(WeaponState.SearchTarget);
                 break;
             }
-            // 2. target이 공격 범위 안에 있는지 검사(공격 범위를 벗어나면 새로운 적 탐색)
-            float distance = Vector3.Distance(attackTarget.transform.position, transform.position);
-            if (distance > towerTemplete.weapon[level].range)
-            {
-                attackTarget = null;
-                ChangeState(WeaponState.SearchTarget);
-                break;
-            }
-            // 3. attackRate 시간만큼 대기
+            // attackRate 시간만큼 대기
             yield return new WaitForSeconds(towerTemplete.weapon[level].rate);
 
             // 4. 공격(발사체 생성)
             SpawnProjectile();
 
         }
+    }
+
+    private Transform FindClosestAttackTarget()
+    {
+        // 제일 가까이 있는 적을 찾기 위해 최초 거리를 최대한 크게 설정
+        float closestDistSqr = Mathf.Infinity;
+        // EnemySpawnwer의 EnemyList에 있는 현재 맵에 존재하는 모든 적 검사
+        for(int i = 0; i < enemySpawner.EnemyList.Count; i++)
+        {
+            float distance = Vector3.Distance(enemySpawner.EnemyList[i].transform.position, transform.position);
+            // 현재 검사중인 적과의 거리가 공격범위 내에 있고, 현재까지 검사한 적보다 거리가 가까우면
+            if(distance <= towerTemplete.weapon[level].range && distance <= closestDistSqr)
+            {
+                closestDistSqr = distance;
+                attackTarget = enemySpawner.EnemyList[i].transform;
+            }
+        }
+        return attackTarget;
+    }
+
+    private bool IsPossivleToAttackTarget()
+    {
+
+        // target이 있는지 검사
+        if(attackTarget == null)
+        {
+            return false;
+        }
+
+        // target이 공격 범위 안에 있는지 검사(공격 범위를 벗어나면 새로운 적 탐색)
+        float distance = Vector3.Distance(attackTarget.position,transform.position);
+        if(distance > towerTemplete.weapon[level].range)
+        {
+            attackTarget = null;
+            return false;
+        }
+        return true;
     }
 
     private void SpawnProjectile()

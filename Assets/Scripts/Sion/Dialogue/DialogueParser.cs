@@ -39,9 +39,11 @@ public class DialogueParser : MonoBehaviour
                 Sound_BGM_Name_List.Add(row[5]);
                 Sound_Effect_Name_List.Add(row[6]);
 
+            
                 if (++i < data.Length)
                 {
                     row = data[i].Split(new char[] { ',' });
+                    
                 }
                 else
                 {
@@ -56,11 +58,16 @@ public class DialogueParser : MonoBehaviour
             dialogue.Sound_BGM_Name = Sound_BGM_Name_List.ToArray();
             dialogue.Sound_Effect_Name = Sound_Effect_Name_List.ToArray();
             dialogueList.Add(dialogue);
+
+            
         }
+
+
 
         return dialogueList.ToArray();
 
 
+       
 
 
     }

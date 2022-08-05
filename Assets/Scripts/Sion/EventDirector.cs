@@ -25,9 +25,9 @@ public class EventDirector : MonoBehaviour
     // 버튼 오브젝트 링크 함수
     public void OnclickEventStart()
     {
-        theIntC.Interact();
+        Debug.Log("ㅇㅋ");
 
-        //theDM.ShowDialogue(GetComponent<InteractionEvent>().GetDialogue());
+        theIntC.Interact();
 
 
     }

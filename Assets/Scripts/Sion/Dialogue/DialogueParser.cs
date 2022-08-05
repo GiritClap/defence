@@ -13,7 +13,7 @@ public class DialogueParser : MonoBehaviour
 
 
 
-        for (int i = 5; i < data.Length;) // 시트의 1번 부터 반복 (0부터 시작임!) // 시작부분 정하는 줄
+        for (int i = 5; i < data.Length;) // 시트의 5번 부터 반복 (0부터 시작임!) // 시작부분 정하는 줄
         {
             string[] row = data[i].Split(new char[] { ',' }); // 쉼표 기준으로 쪼갬
 
@@ -22,6 +22,8 @@ public class DialogueParser : MonoBehaviour
             dialogue.name = row[1];
 
             List<string> contextList = new List<string>();
+
+
 
             List<string> MainSpriteList = new List<string>();
 
@@ -62,8 +64,7 @@ public class DialogueParser : MonoBehaviour
             
         }
 
-
-
+       
         return dialogueList.ToArray();
 
 

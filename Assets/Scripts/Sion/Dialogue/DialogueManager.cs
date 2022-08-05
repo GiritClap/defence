@@ -47,14 +47,18 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
+
+        Debug.Log(isNext);
+
         if (isDialogue)
         {
             if (isNext)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Z))
                 {
                     isNext = false;
                     txt_Dialogue.text = "";
+
                     if (++contextCount < dialogues[lineCount].contexts.Length)
                     {
                         StartCoroutine(TypeWriter());
@@ -64,7 +68,7 @@ public class DialogueManager : MonoBehaviour
                         contextCount = 0;
                         if (++lineCount < dialogues.Length)
                         {
-                            //StartCoroutine(CameraTargettingType());
+                            StartCoroutine(TypeWriter());
                         }
                         else
                         {
@@ -74,6 +78,8 @@ public class DialogueManager : MonoBehaviour
                 }
             }
         }
+
+        
 
     }
 
@@ -85,7 +91,7 @@ public class DialogueManager : MonoBehaviour
         isDialogue = true;
         txt_Dialogue.text = "";
         txt_Name.text = "";
-        theIC.SettingUI(false);
+        //theIC.SettingUI(false);
         dialogues = p_dialogues;
 
         //theCam.CamOriginSetting();
@@ -149,6 +155,8 @@ public class DialogueManager : MonoBehaviour
         SettingUI(false);
 
         isDialogue = false;
+
+
         contextCount = 0;
         lineCount = 0;
         dialogues = null;
@@ -194,16 +202,14 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeWriter()
     {
 
-
-
         SettingUI(true);
         ChangingSprite();
         //PlaySound();
 
-        if (CheckfirstDelay == true)
-        {
-            yield return new WaitForSeconds(2.5f);
-        };
+        //if (CheckfirstDelay == true)
+        //{
+        //    yield return new WaitForSeconds(2.5f);
+        //};
 
         string t_ReplaceText = dialogues[lineCount].contexts[contextCount];
         t_ReplaceText = t_ReplaceText.Replace("'", ",");      // CSV를 읽는 도중 ' 를 ,로 변환하는 코드 
@@ -246,7 +252,7 @@ public class DialogueManager : MonoBehaviour
 
         isNext = true;
         CheckfirstDelay = false;
-
+        Debug.Log("대화 한 문단 끝");
 
     }
 

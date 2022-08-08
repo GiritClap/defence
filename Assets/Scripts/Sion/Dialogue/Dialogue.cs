@@ -33,11 +33,11 @@ public class Dialogue
 
     //
 
-    [HideInInspector]
-    public string name;
+    
+    public string name;     // 대사치는 캐릭터 이름
 
-    [HideInInspector]
-    public string[] contexts;
+    
+    public string[] contexts;   // 대사 내용
 
     [HideInInspector]
     public string[] MainSpriteName;
@@ -59,10 +59,10 @@ public class Dialogue
 public class DialogueEvent
 {
 
-    public string name;
+    public string name; // 대화 이벤트 이름 ex. 식당 이벤트
     
 
-    public Vector2 line;
+    public Vector2 line; // x부터 y까지 줄의 대사 추출
     
     
     public Dialogue[] dialogues;

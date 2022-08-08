@@ -1,21 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 
-public class TitleDirector : MonoBehaviour
+public class EventDirector : MonoBehaviour
 {
 
+ 
 
+    DialogueManager theDM;
+    InteractionController theIntC;
+
+    void Start()
+    {
+
+        theDM = FindObjectOfType<DialogueManager>();
+        theIntC = FindObjectOfType<InteractionController>();
+        
+    }
 
 
     // 버튼 오브젝트 링크 함수
-    public void OnclickNewGame()
+    public void OnclickEventStart()
     {
-        Debug.Log("새 게임");
-        SceneManager.LoadScene("Event_Scene_1");
+        Debug.Log("ㅇㅋ");
+
+        theIntC.Interact();
+
 
     }
 
@@ -23,7 +36,6 @@ public class TitleDirector : MonoBehaviour
     public void OnclickLoadGame()
     {
         Debug.Log("불러오기");
-        SceneManager.LoadScene("Fight_Scene_1");
 
     }
 
@@ -31,7 +43,6 @@ public class TitleDirector : MonoBehaviour
     public void OnclickDebugMod()
     {
         Debug.Log("디버그모드");
-        SceneManager.LoadScene("Fight_Scene_1");
 
     }
 

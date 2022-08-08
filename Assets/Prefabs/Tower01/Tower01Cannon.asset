@@ -17,20 +17,23 @@ MonoBehaviour:
   followTowerRangePrefab: {fileID: 6331147239204374768, guid: 749cf5bac1c04c145b5fd4774eecf24d, type: 3}
   weapon:
   - sprite: {fileID: 21300000, guid: b56df503a139e3146b1b17a771f974f2, type: 3}
+    name: Tower01_0
     damage: 1
     rate: 0.5
-    name: Tower01_0
+    slow: 0
     range: 2
     cost: 30
   - sprite: {fileID: 21300000, guid: 7da347c9c703ffd44b7e76bf53ff1c36, type: 3}
+    name: Tower01_1
     damage: 1.5
     rate: 0.4
-    name: Tower01_1
+    slow: 0
     range: 2
     cost: 100
   - sprite: {fileID: 21300000, guid: 5fbdaac3d59ffac49991e086f2c7d561, type: 3}
+    name: Tower01_2
     damage: 2
     rate: 0.3
-    name: Tower01_2
+    slow: 0
     range: 2
     cost: 150

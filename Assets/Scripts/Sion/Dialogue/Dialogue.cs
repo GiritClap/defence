@@ -26,12 +26,12 @@ public class Dialogue
     public CameraType cameraType;
     public Transform tf_Target;
 
-    //test
 
     public Transform MainCG;
     public Transform OppoCG;
 
-    //
+    public Transform CutSceneCG;
+
 
     
     public string name;     // 대사치는 캐릭터 이름
@@ -44,6 +44,9 @@ public class Dialogue
 
     [HideInInspector]
     public string[] OppoSpriteName;
+
+    [HideInInspector]
+    public string[] CutSceneSpriteName;
 
     [HideInInspector]
     public string[] Sound_BGM_Name;

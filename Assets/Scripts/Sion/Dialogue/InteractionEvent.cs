@@ -11,16 +11,22 @@ public class InteractionEvent : MonoBehaviour
         DialogueEvent t_dialogueEvent = new DialogueEvent();
         t_dialogueEvent.dialogues = DatabaseManager.instance.GetDialogue((int)dialogueEvent.line.x, (int)dialogueEvent.line.y);
 
-        /*
+   
 
         for (int i = 0; i < dialogueEvent.dialogues.Length; i++)
         {
-            t_dialogueEvent.dialogues[i].tf_Target = dialogueEvent.dialogues[i].tf_Target;
-            t_dialogueEvent.dialogues[i].cameraType = dialogueEvent.dialogues[i].cameraType;
+   
+            t_dialogueEvent.dialogues[i].MainCG = dialogueEvent.dialogues[i].MainCG;
+            t_dialogueEvent.dialogues[i].OppoCG = dialogueEvent.dialogues[i].OppoCG;
+
+            //t_dialogueEvent.dialogues[i].tf_Target = dialogueEvent.dialogues[i].tf_Target;
+            //t_dialogueEvent.dialogues[i].cameraType = dialogueEvent.dialogues[i].cameraType;
+
+
+            
         }
         
 
-        */
         dialogueEvent.dialogues = t_dialogueEvent.dialogues;
         return dialogueEvent.dialogues;
 

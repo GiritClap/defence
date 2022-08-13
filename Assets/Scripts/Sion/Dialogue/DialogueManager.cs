@@ -8,6 +8,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject go_DialogueBox;
     [SerializeField] GameObject go_NameBox;
 
+    [SerializeField] GameObject go_StandingCG;
+    [SerializeField] GameObject go_OppoStandingCG;
+    [SerializeField] GameObject go_CutSceneCG;
+
     [SerializeField] Text txt_Dialogue;
     [SerializeField] Text txt_Name;
 
@@ -31,6 +35,21 @@ public class DialogueManager : MonoBehaviour
     SplashManager theSplashManager;
     //CutSceneManager theCutSceneManager;
 
+    //대기
+
+    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer OppoSpriteRenderer;
+    public SpriteRenderer CutSceneSpriteRenderer;
+
+
+    public Animator UI_Dialogue;
+    public Animator UI_Name;
+    public Animator Main_Sprite;
+    public Animator Oppo_Sprite;
+
+    public Animator CutScene_Sprite;
+
+
     bool CheckfirstDelay = true;
 
 
@@ -47,8 +66,7 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-
-        Debug.Log(isNext);
+    
 
         if (isDialogue)
         {
@@ -78,7 +96,7 @@ public class DialogueManager : MonoBehaviour
                 }
             }
         }
-
+          
         
 
     }
@@ -152,7 +170,7 @@ public class DialogueManager : MonoBehaviour
             //yield return new WaitUntil(() => CutSceneManager.isFinished);
         }
         */
-        SettingUI(false);
+
 
         isDialogue = false;
 
@@ -163,25 +181,46 @@ public class DialogueManager : MonoBehaviour
         isNext = false;
         //theCam.CameraTargetSetting(null, 0.008f, true, true); // 대화 후 카메라 리셋 속도
 
+        StartCoroutine(SettingUI_Sprite(false));
+        StartCoroutine(SettingUI_Dialogue(false));
+
+
     }
 
 
-    void ChangingSprite()
+    void ChangeSprite()
     {
-        if (dialogues[lineCount].tf_Target != null)
+
+
+        if (dialogues[lineCount].MainSpriteName[contextCount] != "")
         {
-            /*
-            if (dialogues[lineCount].MainSpriteName[contextCount] != "")
-            {
-                StartCoroutine(theSpriteManager.SpriteChangeCoroutine(
-                                                dialogues[lineCount].tf_Target,
-                                                dialogues[lineCount].MainSpriteName[contextCount]));
-            }
+            
+            StartCoroutine(theSpriteManager.SpriteChangeCoroutine_Main(dialogues[lineCount].MainCG,
+                                                                  dialogues[lineCount].MainSpriteName[contextCount]));
 
-            */
+   
+          
         }
-    }
 
+
+
+        if (dialogues[lineCount].OppoSpriteName[contextCount] != "")
+        {
+            StartCoroutine(theSpriteManager.SpriteChangeCoroutine_Oppo(dialogues[lineCount].OppoCG,
+                                                                  dialogues[lineCount].OppoSpriteName[contextCount]));
+
+        }
+
+
+        if (dialogues[lineCount].CutSceneSpriteName[contextCount] != "")
+        {
+            StartCoroutine(theSpriteManager.SpriteChangeCoroutine_CutScene(dialogues[lineCount].CutSceneCG,
+                                                                  dialogues[lineCount].CutSceneSpriteName[contextCount]));
+
+        }
+
+
+    }
     /*
 
     void PlaySound()
@@ -202,16 +241,22 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeWriter()
     {
 
-        SettingUI(true);
-        ChangingSprite();
+        StartCoroutine(SettingUI_Sprite(true));
+
+        StartCoroutine(SettingUI_Dialogue(true));
+
+        ChangeSprite();
         //PlaySound();
 
-        //if (CheckfirstDelay == true)
-        //{
-        //    yield return new WaitForSeconds(2.5f);
-        //};
+        if (CheckfirstDelay == true)
+        {
+            yield return new WaitForSeconds(1f);
+        };
 
         string t_ReplaceText = dialogues[lineCount].contexts[contextCount];
+
+
+
         t_ReplaceText = t_ReplaceText.Replace("'", ",");      // CSV를 읽는 도중 ' 를 ,로 변환하는 코드 
         t_ReplaceText = t_ReplaceText.Replace("\\n", "\n");
 
@@ -252,15 +297,64 @@ public class DialogueManager : MonoBehaviour
 
         isNext = true;
         CheckfirstDelay = false;
-        Debug.Log("대화 한 문단 끝");
+ 
+
+        
 
     }
 
 
-
+    /*
     void SettingUI(bool p_flag)
     {
+        //go_DialogueBox.SetActive(p_flag);
+        //go_StandingCG.SetActive(p_flag);
+        //go_OppoStandingCG.SetActive(p_flag);
+        
+        /*
+        UI_Dialogue.SetBool("Dialogue_Appear", p_flag);
+        UI_Name.SetBool("Dialogue_Appear", p_flag);
+        Main_Sprite.SetBool("Sprite_Appear", p_flag);
+        Oppo_Sprite.SetBool("Sprite_Appear", p_flag);
+
+
+        if (p_flag)
+        {
+            if (dialogues[lineCount].name == "")
+            {
+                go_NameBox.SetActive(false);
+                
+            }
+            else
+            {
+                go_NameBox.SetActive(true);
+
+                txt_Name.text = dialogues[lineCount].name;
+            }
+        }
+        else
+        {
+            go_NameBox.SetActive(false);
+        }
+
+    }
+    */
+
+
+    IEnumerator SettingUI_Dialogue(bool p_flag)
+    {
+
         go_DialogueBox.SetActive(p_flag);
+        go_NameBox.SetActive(p_flag);
+
+        UI_Dialogue.SetBool("Dialogue_Appear", p_flag);
+        UI_Name.SetBool("Dialogue_Appear", p_flag);
+
+        if (p_flag == true && CheckfirstDelay == true)
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
+        else { }
 
         if (p_flag)
         {
@@ -274,13 +368,30 @@ public class DialogueManager : MonoBehaviour
                 txt_Name.text = dialogues[lineCount].name;
             }
         }
-        else
-        {
-            go_NameBox.SetActive(false);
-        }
+
+
+        yield return null;
 
     }
 
 
+    IEnumerator SettingUI_Sprite(bool p_flag)
+    {
+
+
+        if (p_flag == false && CheckfirstDelay == true)
+        {
+            //yield return new WaitForSeconds(1.0f);
+        }
+        else { }
+
+        Main_Sprite.SetBool("Sprite_Appear", p_flag);
+        Oppo_Sprite.SetBool("Sprite_Appear", p_flag);
+
+        CutScene_Sprite.SetBool("Sprite_Appear", p_flag);
+
+        yield return null;
+
+    }
 
 }

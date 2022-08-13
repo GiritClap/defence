@@ -6,11 +6,6 @@ using UnityEngine.UI;
 
 
 
-/// <summary>
-///  This is For Test.
-/// </summary>
-
-
 
 public class SpriteManager : MonoBehaviour
 {
@@ -21,6 +16,17 @@ public class SpriteManager : MonoBehaviour
 
     public SpriteRenderer[] OppoSpriteRenderer;
 
+    public SpriteRenderer[] CutSceneSpriteRenderer;
+
+
+    bool CheckSameSprite_Main(SpriteRenderer p_SpriteRenderer, Sprite p_Sprite)
+    {
+        if (p_SpriteRenderer.sprite == p_Sprite)
+            return true;
+        else
+            return false;
+    }
+
 
     bool CheckSameSprite_Oppo(SpriteRenderer p_SpriteRenderer, Sprite p_Sprite)
     {
@@ -29,6 +35,26 @@ public class SpriteManager : MonoBehaviour
         else
             return false;
     }
+
+    public IEnumerator SpriteChangeCoroutine_Main(Transform MainCG, string MainSpriteName)
+    {
+        
+
+        SpriteRenderer[] t_SpriteRenderer = MainSpriteRenderer;
+
+        Sprite Main_Sprite = Resources.Load("Characters/" + MainSpriteName, typeof(Sprite)) as Sprite;
+
+
+        t_SpriteRenderer[0].sprite = Main_Sprite;
+
+
+      
+        yield return null;
+
+
+    }
+
+
 
 
     public IEnumerator SpriteChangeCoroutine_Oppo(Transform OppoCG, string OppoSpriteName)
@@ -39,8 +65,6 @@ public class SpriteManager : MonoBehaviour
 
         Sprite Oppo_Sprite = Resources.Load("Characters/" + OppoSpriteName, typeof(Sprite)) as Sprite;
 
-        Debug.Log("1");
-
 
         t_SpriteRenderer[0].sprite = Oppo_Sprite;
 
@@ -50,24 +74,23 @@ public class SpriteManager : MonoBehaviour
 
     }
 
-    public IEnumerator SpriteChangeCoroutine_Main(Transform MainCG, string MainSpriteName)
+    public IEnumerator SpriteChangeCoroutine_CutScene(Transform CutSceneCG, string CutSceneSpriteName)
     {
 
 
-        SpriteRenderer[] t_SpriteRenderer = MainSpriteRenderer;
+        SpriteRenderer[] t_SpriteRenderer = CutSceneSpriteRenderer;
 
-        Sprite Main_Sprite = Resources.Load("Characters/" + MainSpriteName, typeof(Sprite)) as Sprite;
+        Sprite CutScene_Sprite = Resources.Load("CutScene/" + CutSceneSpriteName, typeof(Sprite)) as Sprite;
 
-        Debug.Log("2");
+        t_SpriteRenderer[0].sprite = CutScene_Sprite;
 
-
-        t_SpriteRenderer[0].sprite = Main_Sprite;
 
 
         yield return null;
 
 
     }
+
 
 }
 

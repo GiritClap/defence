@@ -20,5 +20,8 @@ public class TowerTemplate : ScriptableObject
         public float slow; // 감속 퍼센트 (0.2 = 20%)
         public float range; // 공격범위
         public int cost; // 필요 비용
+        public int maxExp; // 필요경험치
+        public int curExp; // 현재 경험치
+        public int exp; // 줄 경험치
     }
 }

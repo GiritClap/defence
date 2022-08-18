@@ -22,4 +22,7 @@ MonoBehaviour:
     rate: 0
     slow: 0.5
     range: 2
-    cost: 50
+    cost: 10
+    maxExp: 0
+    curExp: 0
+    exp: 0

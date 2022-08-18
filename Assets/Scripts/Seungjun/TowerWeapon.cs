@@ -22,6 +22,8 @@ public class TowerWeapon : MonoBehaviour
     private WeaponState weaponState = WeaponState.SearchTarget; // 타워의 무기상태
     private Transform attackTarget = null; // 공격 대상
     private EnemySpawner enemySpawner; // 게임에 존재하는 적 정보 획득용
+    private SpriteRenderer spriteRenderer;
+    
     private int level = 0; // 타워 레벨
 
     public Sprite TowerSprite => towerTemplete.weapon[level].sprite;
@@ -31,6 +33,10 @@ public class TowerWeapon : MonoBehaviour
     public float Level => level + 1;
     public string Name => towerTemplete.weapon[level].name;
     public float Slow => towerTemplete.weapon[level].slow;
+    public int MaxLevel => towerTemplete.weapon.Length;
+    public int MaxExp => towerTemplete.weapon[level].maxExp;
+    public int CurExp => towerTemplete.weapon[level].curExp;
+    public int Exp => towerTemplete.weapon[level].exp;
 
     public WeaponType WeaponType => weaponType;
 
@@ -38,7 +44,7 @@ public class TowerWeapon : MonoBehaviour
 
     public void SetUp(EnemySpawner enemySpawner)
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
         this.enemySpawner = enemySpawner;
         // 최초 상태를 WeaponState.SearchTarget으로 설정
         if(weaponType == WeaponType.Cannon)
@@ -151,5 +157,17 @@ public class TowerWeapon : MonoBehaviour
     {
         GameObject clone = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
         clone.GetComponent<Projectile>().SetUp(attackTarget, towerTemplete.weapon[level].damage);
+    }
+
+    public bool Upgrade()
+    {
+        towerTemplete.weapon[level].curExp += towerTemplete.weapon[level].exp;
+        if(towerTemplete.weapon[level].maxExp < towerTemplete.weapon[level].curExp)
+        {
+           return false;
+        }
+        level++;
+        spriteRenderer.sprite = towerTemplete.weapon[level].sprite;
+        return true; 
     }
 }

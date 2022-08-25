@@ -10,18 +10,16 @@ public class TowerSpawner : MonoBehaviour
                                            // private GameObject towerPrefab;
     [SerializeField]
     private EnemySpawner enemySpawner;
-    [SerializeField]
-    private Transform towerSpawnButton;
 
-    private GameObject towerSpawnButton01 = null;
-    private GameObject towerSpawnButton02 = null;
+    private GameObject towerButtonObject = null;
+
+   
     //[SerializeField]
     //private int towerBuildGold = 30; // 타워 건설 비용
     [SerializeField]
     private PlayerGold playerGold; //타워 건설 시 골드 감소
     private bool isOnTowerButton = false; // 타워 건설 버튼을 눌렀는지 체크
 
-    private bool setActiveFalse;
 
     private GameObject followTowerClone = null;
     private GameObject followTowerRangeClone = null;
@@ -29,10 +27,7 @@ public class TowerSpawner : MonoBehaviour
     private int towerType;
     private TowerWeapon currentTower;
 
-    private void Awake()
-    {
-       
-    }
+    
     public void ReadyToSpawnTower(int type)
     {
         towerType = type;
@@ -49,7 +44,6 @@ public class TowerSpawner : MonoBehaviour
         isOnTowerButton = true;
         followTowerClone = Instantiate(towerTemplete[towerType].followTowerPrefab);
         followTowerRangeClone = Instantiate(towerTemplete[towerType].followTowerRangePrefab);
-        setActiveFalse = false;
         StartCoroutine("OnTowerCancelSystem");
     }
 
@@ -96,23 +90,8 @@ public class TowerSpawner : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
             {
-                towerSpawnButton01 = towerSpawnButton.GetChild(0).gameObject;
-                towerSpawnButton02 = towerSpawnButton.GetChild(1).gameObject;
 
-                if (!towerSpawnButton01.activeSelf && setActiveFalse)
-                {
-                    towerSpawnButton01.SetActive(true);
-                    setActiveFalse = false;
-
-                }
-
-                if (!towerSpawnButton02.activeSelf && setActiveFalse)
-                {
-                    towerSpawnButton02.SetActive(true);
-                    setActiveFalse = false;
-
-                }
-
+                towerButtonObject.SetActive(true);
 
                 isOnTowerButton = false;
                 Destroy(followTowerClone);
@@ -126,8 +105,8 @@ public class TowerSpawner : MonoBehaviour
         }
     }
 
-    public void isSetActiveFalse()
+    public void getGameObjecttoSetActive(GameObject gameObject)
     {
-        setActiveFalse = true;
+        towerButtonObject = gameObject;
     }
 }

@@ -263,11 +263,11 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1961406491}
         m_TargetAssemblyTypeName: TowerSpawner, Assembly-CSharp
-        m_MethodName: isSetActiveFalse
-        m_Mode: 1
+        m_MethodName: getGameObjecttoSetActive
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 5066568}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1141,11 +1141,11 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1961406491}
         m_TargetAssemblyTypeName: TowerSpawner, Assembly-CSharp
-        m_MethodName: isSetActiveFalse
-        m_Mode: 1
+        m_MethodName: getGameObjecttoSetActive
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 100037856}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5888,11 +5888,11 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1961406491}
         m_TargetAssemblyTypeName: TowerSpawner, Assembly-CSharp
-        m_MethodName: isSetActiveFalse
-        m_Mode: 1
+        m_MethodName: getGameObjecttoSetActive
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 864645119}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10683,7 +10683,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 186ad892690131f48b68a7e9ad99dc1b, type: 2}
   - {fileID: 11400000, guid: b26d124f4970db54890e9c70ef48bd77, type: 2}
   enemySpawner: {fileID: 555477029}
-  towerSpawnButton: {fileID: 912264990}
   playerGold: {fileID: 1447036990}
 --- !u!4 &1961406492
 Transform:

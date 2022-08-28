@@ -23,5 +23,7 @@ public class TowerTemplate : ScriptableObject
         public int maxExp; // 필요경험치
         public int curExp; // 현재 경험치
         public int exp; // 줄 경험치
+        public int sell; // 판매했을때 돌려받을 골드
+        public int towerType; // 타워 타입
     }
 }

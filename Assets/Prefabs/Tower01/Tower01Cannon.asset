@@ -26,6 +26,8 @@ MonoBehaviour:
     maxExp: 3
     curExp: 0
     exp: 1
+    sell: 25
+    towerType: 0
   - sprite: {fileID: 21300000, guid: 7da347c9c703ffd44b7e76bf53ff1c36, type: 3}
     name: Tower01_1
     damage: 1.5
@@ -36,6 +38,8 @@ MonoBehaviour:
     maxExp: 3
     curExp: 0
     exp: 1
+    sell: 0
+    towerType: 0
   - sprite: {fileID: 21300000, guid: 5fbdaac3d59ffac49991e086f2c7d561, type: 3}
     name: Tower01_2
     damage: 2
@@ -46,3 +50,5 @@ MonoBehaviour:
     maxExp: 3
     curExp: 0
     exp: 1
+    sell: 0
+    towerType: 0

@@ -70,4 +70,10 @@ public class TowerInfoViewr : MonoBehaviour
         textLevel.text = "Level : " + currentTower.Level;
         textExp.text = "Exp : " + currentTower.CurExp + " / " + currentTower.MaxExp;
     }
+
+    public void OnClickEventTowerSell()
+    {
+        currentTower.Sell();
+        OffPanel();
+    }
 }

@@ -13,11 +13,12 @@ public class TowerSpawner : MonoBehaviour
 
     private GameObject towerButtonObject = null;
 
-   
+
     //[SerializeField]
     //private int towerBuildGold = 30; // 타워 건설 비용
     [SerializeField]
     private PlayerGold playerGold; //타워 건설 시 골드 감소
+
     private bool isOnTowerButton = false; // 타워 건설 버튼을 눌렀는지 체크
 
 
@@ -25,9 +26,9 @@ public class TowerSpawner : MonoBehaviour
     private GameObject followTowerRangeClone = null;
 
     private int towerType;
-    private TowerWeapon currentTower;
 
-    
+
+
     public void ReadyToSpawnTower(int type)
     {
         towerType = type;
@@ -77,11 +78,28 @@ public class TowerSpawner : MonoBehaviour
         Vector3 position = tileTransform.position + Vector3.back;
         // 선택한 타일의 위치에 타워 건설
         GameObject clone = Instantiate(towerTemplete[towerType].towerPrefab, position, Quaternion.identity);
-        clone.GetComponent<TowerWeapon>().SetUp(enemySpawner);
+        clone.GetComponent<TowerWeapon>().SetUp(enemySpawner, playerGold, tile, towerType);
         Destroy(followTowerClone);
         Destroy(followTowerRangeClone);
 
         StopCoroutine("OnTowerCancelSystem");
+    }
+
+    public void UpGradeTower(Transform towerWeapon)
+    {
+        if (isOnTowerButton == false)
+        {
+            return;
+        }
+        isOnTowerButton = false;
+
+        TowerWeapon currentTower = towerWeapon.GetComponent<TowerWeapon>();
+        currentTower.Upgrade();
+
+        Destroy(followTowerClone);
+        Destroy(followTowerRangeClone);
+        StopCoroutine("OnTowerCancelSystem");
+
     }
 
     private IEnumerator OnTowerCancelSystem()

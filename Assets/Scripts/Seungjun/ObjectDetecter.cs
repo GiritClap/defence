@@ -39,8 +39,10 @@ public class ObjectDetecter : MonoBehaviour
                 }
                 else if(hit.transform.CompareTag("Tower"))
                 {
+                  
                     towerInfoViewr.OnPanel(hit.transform);
-                    
+                    towerSpawner.UpGradeTower(hit.transform);
+
                 }
             }
         }

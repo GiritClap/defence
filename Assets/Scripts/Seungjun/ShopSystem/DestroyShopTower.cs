@@ -7,8 +7,8 @@ public class DestroyShopTower : MonoBehaviour
     
     public void DestroyThis()
     {
-        
-        Destroy(gameObject);
+
+        gameObject.SetActive(false);
         
     }
 }

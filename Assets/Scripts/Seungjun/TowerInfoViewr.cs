@@ -17,6 +17,8 @@ public class TowerInfoViewr : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textLevel;
     [SerializeField]
+    private TextMeshProUGUI textExp;
+    [SerializeField]
     private TowerAttackRange towerAttackRange;
 
 
@@ -66,5 +68,12 @@ public class TowerInfoViewr : MonoBehaviour
         textRate.text = "Rate : " + currentTower.Rate;
         textName.text = currentTower.Name;
         textLevel.text = "Level : " + currentTower.Level;
+        textExp.text = "Exp : " + currentTower.CurExp + " / " + currentTower.MaxExp;
+    }
+
+    public void OnClickEventTowerSell()
+    {
+        currentTower.Sell();
+        OffPanel();
     }
 }

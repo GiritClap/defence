@@ -51,14 +51,20 @@ public class RandomShop : MonoBehaviour
             if(temp.towerName.Equals("Tower01"))
             {
                 towerUI[i] = Instantiate(towerPrefab[0], parent);
+              
             } else if(temp.towerName.Equals("Tower02"))
             {
                 towerUI[i] = Instantiate(towerPrefab[1], parent);
-            } else if(temp.towerName.Equals("Tower03"))
+             
+
+            }
+            else if(temp.towerName.Equals("Tower03"))
             {
                 towerUI[i] = Instantiate(towerPrefab[2], parent);
+             
+
             }
-            
+
             // 생성 된 카드에 결과 리스트의 정보를 넣어줍니다.
             towerUI[i].GetComponent<ShopTowerInfo>().TowerUiSet(result);
         }

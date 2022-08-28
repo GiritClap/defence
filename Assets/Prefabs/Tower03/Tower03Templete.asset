@@ -22,4 +22,9 @@ MonoBehaviour:
     rate: 0
     slow: 0.5
     range: 2
-    cost: 50
+    cost: 10
+    maxExp: 3
+    curExp: 0
+    exp: 1
+    sell: 25
+    towerType: 2

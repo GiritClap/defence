@@ -17,8 +17,14 @@ MonoBehaviour:
   followTowerRangePrefab: {fileID: 6331147239204374768, guid: dfec7f80adcf04240b6cde00b28d1881, type: 3}
   weapon:
   - sprite: {fileID: 21300000, guid: 46cf43c1e11c7864894e56dfb210642b, type: 3}
+    name: Tower02
     damage: 100
     rate: 10
-    name: Tower02
+    slow: 0
     range: 4
-    cost: 100
+    cost: 10
+    maxExp: 3
+    curExp: 0
+    exp: 1
+    sell: 25
+    towerType: 1

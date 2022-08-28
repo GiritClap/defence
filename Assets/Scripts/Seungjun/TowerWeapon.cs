@@ -22,7 +22,12 @@ public class TowerWeapon : MonoBehaviour
     private WeaponState weaponState = WeaponState.SearchTarget; // 타워의 무기상태
     private Transform attackTarget = null; // 공격 대상
     private EnemySpawner enemySpawner; // 게임에 존재하는 적 정보 획득용
+    private SpriteRenderer spriteRenderer;
+    private int towerType;
+    
     private int level = 0; // 타워 레벨
+    private Tile ownerTile; // 현재 타워가 배치 되어 있는 타일
+    private PlayerGold playerGold;
 
     public Sprite TowerSprite => towerTemplete.weapon[level].sprite;
     public float AttackRange => towerTemplete.weapon[level].range;
@@ -31,15 +36,23 @@ public class TowerWeapon : MonoBehaviour
     public float Level => level + 1;
     public string Name => towerTemplete.weapon[level].name;
     public float Slow => towerTemplete.weapon[level].slow;
+    public int MaxLevel => towerTemplete.weapon.Length;
+    public int MaxExp => towerTemplete.weapon[level].maxExp;
+    public int CurExp => towerTemplete.weapon[level].curExp;
+    public int Exp => towerTemplete.weapon[level].exp;
+    public int TowerType => towerTemplete.weapon[level].towerType;
 
     public WeaponType WeaponType => weaponType;
 
     
 
-    public void SetUp(EnemySpawner enemySpawner)
+    public void SetUp(EnemySpawner enemySpawner,PlayerGold playerGold ,Tile ownerTile, int towerType)
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
         this.enemySpawner = enemySpawner;
+        this.playerGold = playerGold; 
+        this.ownerTile = ownerTile;
+        this.towerType = towerType;
         // 최초 상태를 WeaponState.SearchTarget으로 설정
         if(weaponType == WeaponType.Cannon)
         {
@@ -151,5 +164,41 @@ public class TowerWeapon : MonoBehaviour
     {
         GameObject clone = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
         clone.GetComponent<Projectile>().SetUp(attackTarget, towerTemplete.weapon[level].damage);
+    }
+
+    public void Upgrade()
+    {
+        if(towerType != towerTemplete.weapon[level].towerType)
+        {
+            return ;
+        }
+
+        towerTemplete.weapon[level].curExp += towerTemplete.weapon[level].exp;
+        
+        if(towerTemplete.weapon[level].maxExp < towerTemplete.weapon[level].curExp)
+        {
+           return ;
+        }
+       
+        if( playerGold.CurrentGold < towerTemplete.weapon[level].cost)
+        {
+            return ;
+        }
+
+        towerTemplete.weapon[level].curExp = 0;
+        playerGold.CurrentGold -= towerTemplete.weapon[level].cost;
+        level++;
+        spriteRenderer.sprite = towerTemplete.weapon[level].sprite;
+        
+        
+
+        
+    }
+
+    public void Sell()
+    {
+        playerGold.CurrentGold += towerTemplete.weapon[level].sell;
+        ownerTile.IsBuildTower = false;
+        Destroy(gameObject);
     }
 }
